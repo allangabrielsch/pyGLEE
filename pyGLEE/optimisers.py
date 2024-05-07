@@ -163,7 +163,7 @@ cov = CovarianceMatrix(sampling_f='gaussian',
 
 
 
-class Optimizers:
+class Optimisers:
     """
     A class to represent the optimizers which includes Simulated Annealing and Markov Chain Monte Carlo parameters.
 

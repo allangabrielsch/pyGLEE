@@ -21,7 +21,7 @@ class GleeConfig:
     def __init__(self, header, optimiser, e_source):
         if not isinstance(header, Header):
             raise TypeError("header must be an instance of Header")
-        if not isinstance(optimiser, Optimizers):
+        if not isinstance(optimiser, Optimisers):
             raise TypeError("optimiser must be an instance of Optimizers")
         if not isinstance(e_source, ESource):
             raise TypeError("e_source must be an instance of ESource")
