@@ -1,7 +1,7 @@
-from .header import Header
-from .optimisers import Optimisers
-from .esource import ESource
-from .light_profiles import LightProfile
+from header import *
+from optimisers import *
+from esource import *
+from light_profiles import *
 
 class GleeConfig:
     """
@@ -45,12 +45,10 @@ class GleeConfig:
         values.append("")  # Add a break
         values.append(self.optimiser.as_string())
         values.append("") 
-        values.append(f"esources {len(self.e_source_list)}")
-        values.append("")
+        values.append(f"esource {len(self.e_source_list)}")
         for i in range(len(self.e_source_list)):
             values.append
             values.append(self.e_source_list[i].as_string())
             values.append("esource_end")
-            values.append("")
         return "\n".join(values)
     

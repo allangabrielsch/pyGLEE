@@ -1,8 +1,8 @@
-from .light_profiles import *
-from .priors import *
+from light_profiles import *
 
 class ESource:
     def __init__(self, 
+                 dds_ds, 
                  ngy, 
                  ngx, 
                  dx, 
@@ -16,22 +16,18 @@ class ESource:
                  sub_agn_psf_factor, 
                  sub_esr_psf, 
                  sub_esr_psf_factor, 
-                 regopt, 
-                 reglampre, 
+                 regopt, reglampre, 
                  reglamnup, 
                  regtype, 
                  reglam, 
                  reglamlo, 
                  reglamhi, 
-                 light_profiles,
-                 dds_ds=None,
-                 z=None):
+                 light_profiles):
         """
         ESource class represents a source in the E-source model.
 
         Attributes:
-            z (prior, compulsory unless dds_ds given): Redshift. Defaults to None.
-            dds_ds (prior, compulsory unless z given): Dds/Ds ratio. Defaults to None.
+            dds_ds (float): Dds/Ds ratio.
             ngy (int): Number of source pixels (number of pixels in 2nd dimension).
             ngx (int): Number of image pixels (number of pixels in 2nd dimension).
             dx (float): Pixel size in image plane (pixel size in 2nd dimension).
@@ -55,7 +51,8 @@ class ESource:
             light_profiles (list): list containing the light profiles.
         """    
     
-
+        if not isinstance(dds_ds, (int, float)):
+            raise TypeError("dds_ds must be int or float")
         if not isinstance(ngy, int):
             raise TypeError("ngy must be int")
         if not isinstance(ngx, int):
@@ -98,15 +95,8 @@ class ESource:
             raise TypeError("reglamhi must be int")
         if not isinstance(light_profiles, list) or not all(isinstance(lp, LightProfile) for lp in light_profiles):
             raise TypeError("light_profiles must be a list of LightProfile instances")
-        if dds_ds is not None and not isinstance(dds_ds, (Prior)):
-            raise ValueError("dds_ds must be a float.")
-        if z is not None and not isinstance(z, (Prior)):
-            raise ValueError("z must be a float.")
-        if z is None and dds_ds is None:
-            raise ValueError("Either z or dds_ds must be provided.")
         
         self.dds_ds = dds_ds
-        self.z = z
         self.ngy = ngy
         self.ngx = ngx
         self.dx = dx
@@ -131,31 +121,30 @@ class ESource:
 
     def as_string(self):
         values = []
-        if self.z is not None:
-            values.append(f" z        {self.z.mean}  {self.z.prior_as_string()}")
-        if self.dds_ds is not None:
-            values.append(f" dds_ds      {self.dds_ds.prior_as_string()}")
-        values.append(f" ngy          {self.ngy}")
-        values.append(f" ngx          {self.ngx}")
-        values.append(f" dx           {self.dx}")
-        values.append(f" data         {self.data}")
-        values.append(f" err          {self.err}")
-        values.append(f" arcmask      {self.arcmask}")
-        values.append(f" lensmask     {self.lensmask}")
-        values.append(f" mod_light    {self.mod_light}")
-        values.append(f" psf          {self.psf}")
-        values.append(f" sub_agn_psf  {self.sub_agn_psf}")
-        values.append(f" sub_agn_psf_factor     {self.sub_agn_psf_factor}")
-        values.append(f" sub_esr_psf  {self.sub_esr_psf}")
-        values.append(f" sub_esr_psf_factor     {self.sub_esr_psf_factor}")
-        values.append(f" regopt       {self.regopt}")
-        values.append(f" reglampre    {self.reglampre}")
-        values.append(f" reglamnup    {self.reglamnup}")
-        values.append(f" regtype      {self.regtype}")
-        values.append(f" reglam       {self.reglam}")
-        values.append(f" reglamlo     {self.reglamlo}")
-        values.append(f" reglamhi     {self.reglamhi}")
-        values.append(f" esource_light  {len(self.light_profiles)}")
+        values.append("esources 1")
+        values.append(f"Dds/Ds    {self.dds_ds}  exact:")
+        values.append(f"ngy          {self.ngy}")
+        values.append(f"ngx          {self.ngx}")
+        values.append(f"dx           {self.dx}")
+        values.append(f"data         {self.data}")
+        values.append(f"err          {self.err}")
+        values.append(f"arcmask      {self.arcmask}")
+        values.append(f"lensmask     {self.lensmask}")
+        values.append(f"mod_light    {self.mod_light}")
+        values.append(f"psf          {self.psf}")
+        values.append(f"sub_agn_psf  {self.sub_agn_psf}")
+        values.append(f"sub_agn_psf_factor     {self.sub_agn_psf_factor}")
+        values.append(f"sub_esr_psf  {self.sub_esr_psf}")
+        values.append(f"sub_esr_psf_factor     {self.sub_esr_psf_factor}")
+        values.append(f"regopt       {self.regopt}")
+        values.append(f"reglampre    {self.reglampre}")
+        values.append(f"reglamnup    {self.reglamnup}")
+        values.append(f"regtype      {self.regtype}")
+        values.append(f"reglam       {self.reglam}")
+        values.append(f"reglamlo     {self.reglamlo}")
+        values.append(f"reglamhi     {self.reglamhi}")
+        values.append(f"esource_light  {len(self.light_profiles)}")
         for lp in self.light_profiles:
             values.append(lp.as_string())
+        values.append("esource_end")
         return "\n".join(values)

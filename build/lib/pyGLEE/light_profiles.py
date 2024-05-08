@@ -1,4 +1,4 @@
-from .priors import *
+from priors import *
 
 class LightProfile:
     def __init__(self, x, y, amp):
@@ -50,14 +50,16 @@ class Sersic(LightProfile):
         Returns:
             str: A string representation of the object.
         """   
-        glee_string = f"""      sersic
-            {self.x.mean}  #x-coord   {self.x.prior_as_string()}
-            {self.y.mean}  #y-coord   {self.y.prior_as_string()}
-            {self.q.mean}  #q         {self.q.prior_as_string()}
-            {self.pa.mean}  #PA        {self.pa.prior_as_string()}
-            {self.amp.mean}  #amp       {self.amp.prior_as_string()}
-            {self.r_eff.mean}  #r_eff     {self.r_eff.prior_as_string()}
-            {self.n_sersic.mean}  #n_sersic  {self.n_sersic.prior_as_string()}"""
+        glee_string = f"""
+        sersic
+        {self.x.mean}  #x-coord   {self.x.prior_as_string()}
+        {self.y.mean}  #y-coord   {self.y.prior_as_string()}
+        {self.q.mean}  #q         {self.q.prior_as_string()}
+        {self.pa.mean}  #PA        {self.pa.prior_as_string()}
+        {self.amp.mean}  #amp       {self.amp.prior_as_string()}
+        {self.r_eff.mean}  #r_eff     {self.r_eff.prior_as_string()}
+        {self.n_sersic.mean}  #n_sersic  {self.n_sersic.prior_as_string()}
+        """
         return glee_string
     
 class PSF(LightProfile):
@@ -70,20 +72,6 @@ class PSF(LightProfile):
     """    
     def __init__(self, x, y, amp):
         super().__init__(x, y, amp)
-    def as_string(self):
-        """
-        Returns a GLEE string of the light profile.
-
-        The string includes the mean values and prior information for each attribute of the object.
-
-        Returns:
-            str: A string representation of the object.
-        """   
-        glee_string = f"""      psf
-            {self.x.mean}  #x-coord   {self.x.prior_as_string()}
-            {self.y.mean}  #y-coord   {self.y.prior_as_string()}
-            {self.amp.mean}  #amp       {self.amp.prior_as_string()}"""
-        return glee_string
 
 class Gaussian(LightProfile):
     """
@@ -116,13 +104,15 @@ class Gaussian(LightProfile):
         Returns:
             str: A string representation of the object.
         """       
-        glee_string = f"""      gaussian
-            {self.x.mean}  #x-coord   {self.x.prior_as_string()}
-            {self.y.mean}  #y-coord    {self.y.prior_as_string()}
-            {self.q.mean}  #q          {self.q.prior_as_string()}
-            {self.pa.mean}  #PA        {self.pa.prior_as_string()}
-            {self.amp.mean}  #amp       {self.amp.prior_as_string()}
-            {self.sigma.mean}  #sigma      {self.sigma.prior_as_string()}"""
+        glee_string = f"""
+        gaussian
+        {self.x.mean}  #x-coord   {self.x.prior_as_string()}
+        {self.y.mean}  #y-coord    {self.y.prior_as_string()}
+        {self.q.mean}  #q          {self.q.prior_as_string()}
+        {self.pa.mean}  #PA        {self.pa.prior_as_string()}
+        {self.amp.mean}  #amp       {self.amp.prior_as_string()}
+        {self.sigma.mean}  #sigma      {self.sigma.prior_as_string()}
+        """
         return glee_string
     
 class Moffat(LightProfile):
@@ -152,14 +142,16 @@ class Moffat(LightProfile):
         Returns:
             str: A string representation of the object.
         """        
-        glee_string = f"""      moffat
-            {self.x.mean}  #x-coord   {self.x.prior_as_string()}
-            {self.y.mean}  #y-coord    {self.y.prior_as_string()}
-            {self.q.mean}  #q          {self.q.prior_as_string()}
-            {self.pa.mean}  #PA        {self.pa.prior_as_string()}
-            {self.amp.mean}  #amp       {self.amp.prior_as_string()}
-            {self.alpha.mean}  #alpha      {self.alpha.prior_as_string()}
-            {self.beta.mean}  #beta      {self.beta.prior_as_string()}"""
+        glee_string = f"""
+        moffat
+        {self.x.mean}  #x-coord   {self.x.prior_as_string()}
+        {self.y.mean}  #y-coord    {self.y.prior_as_string()}
+        {self.q.mean}  #q          {self.q.prior_as_string()}
+        {self.pa.mean}  #PA        {self.pa.prior_as_string()}
+        {self.amp.mean}  #amp       {self.amp.prior_as_string()}
+        {self.alpha.mean}  #alpha      {self.alpha.prior_as_string()}
+        {self.beta.mean}  #beta      {self.beta.prior_as_string()}
+        """
         return glee_string
 
 class piemd(LightProfile): 
@@ -187,11 +179,13 @@ class piemd(LightProfile):
         Returns:
             str: A string representation of the object.
         """    
-        glee_string = f"""      piemd
-            {self.x.mean}  #x-coord   {self.x.prior_as_string()}
-            {self.y.mean}  #y-coord    {self.y.prior_as_string()}
-            {self.q.mean}  #q          {self.q.prior_as_string()}
-            {self.pa.mean}  #PA        {self.pa.prior_as_string()}
-            {self.amp.mean}  #amp       {self.amp.prior_as_string()}
-            {self.w.mean}  #w      {self.w.prior_as_string()}"""
+        glee_string = f"""
+        piemd
+        {self.x.mean}  #x-coord   {self.x.prior_as_string()}
+        {self.y.mean}  #y-coord    {self.y.prior_as_string()}
+        {self.q.mean}  #q          {self.q.prior_as_string()}
+        {self.pa.mean}  #PA        {self.pa.prior_as_string()}
+        {self.amp.mean}  #amp       {self.amp.prior_as_string()}
+        {self.w.mean}  #w      {self.w.prior_as_string()}
+        """
         return glee_string
