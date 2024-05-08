@@ -16,7 +16,7 @@ class GleeConfig:
     e_source : ESource
         An extended source
     light_profiles : list of LightProfile
-        The list of LightProfile parameters.
+        The list of LightProfile parameters.mlplane      lens_coord_observed
     """
     def __init__(self, header, optimiser, e_source_list):
         if not isinstance(header, Header):

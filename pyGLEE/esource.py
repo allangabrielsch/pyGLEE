@@ -9,8 +9,7 @@ class ESource:
                  data, 
                  err, 
                  arcmask, 
-                 lensmask, 
-                 mod_light, 
+                 lensmask,  
                  psf, 
                  sub_agn_psf, 
                  sub_agn_psf_factor, 
@@ -24,6 +23,7 @@ class ESource:
                  reglamlo, 
                  reglamhi, 
                  light_profiles,
+                 mod_light=None,
                  dds_ds=None,
                  z=None):
         """
@@ -70,8 +70,8 @@ class ESource:
             raise TypeError("arcmask must be a .fits file path")
         if not isinstance(lensmask, str) or not lensmask.endswith('.fits'):
             raise TypeError("lensmask must be a .fits file path")
-        if not isinstance(mod_light, str):
-            raise TypeError("mod_light must be string")
+        if mod_light not in ['LensOnly', None]:
+            raise TypeError("mod_light must set to None for source reconstruction or to 'LensOnly for no source reconstruction.")
         if not isinstance(psf, str) or not psf.endswith('.fits'):
             raise TypeError("psf must be a .fits file path")
         if not isinstance(sub_agn_psf, str) or not sub_agn_psf.endswith('.fits'):
@@ -142,7 +142,8 @@ class ESource:
         values.append(f" err          {self.err}")
         values.append(f" arcmask      {self.arcmask}")
         values.append(f" lensmask     {self.lensmask}")
-        values.append(f" mod_light    {self.mod_light}")
+        if self.mod_light is not None:
+            values.append(f" mod_light    {self.mod_light}")
         values.append(f" psf          {self.psf}")
         values.append(f" sub_agn_psf  {self.sub_agn_psf}")
         values.append(f" sub_agn_psf_factor     {self.sub_agn_psf_factor}")
