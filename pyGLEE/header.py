@@ -1,3 +1,4 @@
+from .optimisers import Optimisers
 class Header:
     """
     A class to represent the chi2 parameters.
@@ -20,7 +21,7 @@ class Header:
     seed : int
         The magical seed.
     """
-    def __init__(self, chi2type, minimiser, seed):
+    def __init__(self, chi2type, minimiser, seed, optimisers):
         if not isinstance(chi2type, int):
             raise TypeError("chi2type must be an integer")        
         if chi2type not in [1, 2, 4, 8, 16, 32, 64, 128]:
@@ -29,10 +30,13 @@ class Header:
             raise ValueError("minimiser must be 'siman' or 'mcmc'")
         if not isinstance(seed, int):
             raise TypeError("seed must be an integer")
+        if not isinstance(optimisers, Optimisers):
+            raise TypeError("optimisers must be an instance of Optimisers")
 
         self.chi2type = chi2type
         self.minimiser = minimiser
         self.seed = seed
+        self.optimisers = optimisers
 
     def as_string(self):
         """
@@ -47,4 +51,5 @@ class Header:
         values.append(f"chi2type {self.chi2type}")
         values.append(f"minimiser {self.minimiser}")
         values.append(f"seed {self.seed}")
+        values.append(self.optimisers.as_string())
         return "\n".join(values)

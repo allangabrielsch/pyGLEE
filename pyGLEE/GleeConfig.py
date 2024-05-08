@@ -18,17 +18,14 @@ class GleeConfig:
     light_profiles : list of LightProfile
         The list of LightProfile parameters.mlplane      lens_coord_observed
     """
-    def __init__(self, header, optimiser, e_source_list):
+    def __init__(self, header, e_source_list):
         if not isinstance(header, Header):
             raise TypeError("header must be an instance of Header")
-        if not isinstance(optimiser, Optimisers):
-            raise TypeError("optimiser must be an instance of Optimizers")
         if not isinstance(e_source_list, list):
             raise TypeError("e_source_list must be a list of ESource instances")
         if not all(isinstance(es, ESource) for es in e_source_list):
             raise TypeError("e_source_list must be a list of ESource instances")
         self.header = header
-        self.optimiser = optimiser
         self.e_source_list = e_source_list
 
     def as_string(self):
@@ -42,8 +39,6 @@ class GleeConfig:
         """
         values = []
         values.append(self.header.as_string())
-        values.append("")  # Add a break
-        values.append(self.optimiser.as_string())
         values.append("") 
         values.append(f"esources {len(self.e_source_list)}")
         values.append("")
